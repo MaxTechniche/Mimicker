@@ -10,8 +10,10 @@ from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from watchdog.events import FileSystemEventHandler
 
-root_base = 'C:\\Users\\Max Techniche\\Documents\\Programming\\'
-mimic_base = "J:\\Programming\\"
+
+# windows
+root_base = 'C:\\Users\\<username>\\Documents\\Programming\\'
+mimic_base = "<drive-letter:\\Programming\\"
 
 
 class Mimicker(FileSystemEventHandler):
