@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import yaml
 import os
 import shutil
 import time
@@ -11,9 +12,9 @@ from watchdog.events import LoggingEventHandler
 from watchdog.events import FileSystemEventHandler
 
 
-# windows
-root_base = 'C:\\Users\\<username>\\Documents\\Programming\\'
-mimic_base = "<drive-letter:\\Programming\\"
+paths = yaml.load(open('paths.yml'), Loader=yaml.FullLoader)
+root_base = paths['source'].replace('\\', '/').rstrip('/') + '/'
+mimic_base = paths['destination'].replace('\\', '/').rstrip('/') + '/'
 
 
 class Mimicker(FileSystemEventHandler):
@@ -23,8 +24,9 @@ class Mimicker(FileSystemEventHandler):
         return super().on_any_event(event)
     
     def on_created(self, event):
+        print(event.src_path)
         if type(event) == we.DirCreatedEvent:
-            dir_path = event.src_path.replace(root_base, '').split('\\')
+            dir_path = event.src_path.replace(root_base, '').split('/')
             
             current_dir = ''
             for sub_dir in dir_path:
@@ -51,7 +53,7 @@ class Mimicker(FileSystemEventHandler):
         return super().on_created(event)
     
     def create_folder_tree(self, event):
-        dir_path = event.src_path.replace(root_base, '').split('\\')[:-1]
+        dir_path = event.src_path.replace(root_base, '').split('/')[:-1]
         
         current_dir = ''
         for sub_dir in dir_path:
@@ -80,7 +82,7 @@ class Mimicker(FileSystemEventHandler):
         return super().on_deleted(event)
 
     def create_deleted_folder_tree(self, event):
-        dir_path = event.src_path.replace(root_base, '~deleted\\').split('\\')
+        dir_path = event.src_path.replace(root_base, '~deleted/').split('/')
         if type(event) == we.FileDeletedEvent:
             dir_path = dir_path[:-1]
         
