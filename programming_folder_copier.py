@@ -71,8 +71,6 @@ class Mimicker(FileSystemEventHandler):
     
     def on_deleted(self, event):
         self.create_deleted_folder_tree(event)
-        if type(event) == we.DirDeletedEvent:
-            return super().on_deleted(event)
         path = event.src_path.replace(root_base, '')        
         delete_path = os.path.join(mimic_base, '~deleted', path)
         try:

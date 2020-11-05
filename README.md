@@ -1,6 +1,11 @@
 # Mimicker
 
-## **Use**
+## **Goal**
+
+Mimic (backup) a folder architecture in another place.
+(Essentially File History)
+
+### Setup
 
 Create a file in the base directory called `paths.yml` and configure it to have the source and destination directories.  
 
@@ -9,15 +14,21 @@ source: <source-directory>
 destination: <destination-directory>
 ```
 
-## **Goal**
+### Dependencies
 
-Mimic (backup) a folder architecture in another place.
-(Essentially File History)
+```shell
+pip install watchdog
+pip install pyyaml
 
-### **BUGS**
+OR
+
+pipenv shell
+```
+
+### BUGS
 
 * Permission Error when overwriting files rapidly (Very Uncommon)
 
-### **TODO**
+### TODO
 
 * [ ] create file history numbers. (If the file was edited, create a new file with the number 1 higher than the previous)
